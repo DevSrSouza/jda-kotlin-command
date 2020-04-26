@@ -58,8 +58,7 @@ jda.commands("!") {
         ).await()
     
         // Add a White check mark reaction to be usaged as a button
-        botMessage.addReaction(Emoji.WHITE_CHECK_MARK.unicode.toString())
-            .await()
+        botMessage.addReaction(WHITE_CHECK_MARK).await()
 
         // Setup is a block that you can use `on<T>()` to listen
         // to events at the lifecycle of the command execution.
