@@ -1,6 +1,6 @@
 # jda-kotlin-command
 
-A small Kotlin library to create Guild commands using [JDA](https://github.com/DV8FromTheWorld/JDA) and [Coroutines](https://github.com/Kotlin/kotlinx.coroutines).
+A small Kotlin library to create Guild commands for Discord using [JDA](https://github.com/DV8FromTheWorld/JDA) and [Coroutines](https://github.com/Kotlin/kotlinx.coroutines).
 
 ## Dependencies
 - JDA
@@ -17,9 +17,13 @@ val jda_reactor_version = "1.0.0"
 
 repositories {
     jcenter()
+
+    maven { url = "http://nexus.devsrsouza.com.br/repository/maven-public/" }
 }
 
 dependencies {
+    implementation("br.com.devsrsouza:jda-kotlin-command:1.0.0")
+
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutines_version")
@@ -36,6 +40,9 @@ dependencies {
 - `asFlow()` is a `kotlinx-coroutines-reactor` extension.
 
 ```kotlin
+import br.com.devsrsouza.jda.command.*
+import br.com.devsrsouza.jda.command.utils.on
+
 val WHITE_CHECK_MARK = "\u2705"
 
 jda.commands("!") {

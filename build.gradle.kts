@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.3.72"
+    id("maven-publish")
 }
 
 group = "br.com.devsrsouza"
@@ -32,5 +33,44 @@ tasks {
     }
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
+    }
+}
+
+val sources by tasks.registering(Jar::class) {
+    baseName = project.name
+    classifier = "sources"
+    from(sourceSets.main.get().allSource)
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            artifactId = project.name.toLowerCase()
+
+            from(components["java"])
+            artifact(sources.get())
+
+            pom {
+                description.set("A small Kotlin library to create Guild commands for Discord using JDA and Kotlin Coroutines.")
+                url.set("https://github.com/DevSrSouza/jda-kotlin-command")
+                licenses {
+                    license {
+                        name.set("Apache License, Version 2.0")
+                        url.set("https://raw.githubusercontent.com/DevSrSouza/jda-kotlin-command/master/LICENSE")
+                        distribution.set("repo")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("DevSrSouza")
+                        name.set("Gabriel Souza")
+                        email.set("devsrsouza@gmail.com")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/DevSrSouza/jda-kotlin-command/tree/master/")
+                }
+            }
+        }
     }
 }
