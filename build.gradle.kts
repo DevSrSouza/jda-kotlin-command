@@ -18,7 +18,6 @@ dependencies {
 
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutines_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutines_version")
 
     implementation("club.minnced:jda-reactor:$jda_reactor_version")

@@ -26,7 +26,6 @@ dependencies {
 
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutines_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutines_version")
 
     implementation("club.minnced:jda-reactor:$jda_reactor_version")
@@ -36,12 +35,18 @@ dependencies {
 
 ## Sample
 
-- `await()` is a `kotlinx-coroutines-jdk8` extension.
 - `asFlow()` is a `kotlinx-coroutines-reactor` extension.
 
 ```kotlin
 import br.com.devsrsouza.jda.command.*
 import br.com.devsrsouza.jda.command.utils.on
+
+suspend fun <T> RestAction<T>.await() = suspendCoroutine<T> { continuation ->
+    queue(
+        continuation::resume,
+        continuation::resumeWithException
+    )
+}
 
 val WHITE_CHECK_MARK = "\u2705"
 
@@ -50,11 +55,11 @@ jda.commands("!") {
         // Send a message to the guild channel
         val botMessage = channel.sendMessage(
             "Hi ${member.asMention}, please click at CHECK MARK!"
-        ).submit().await()
+        ).await()
     
         // Add a White check mark reaction to be usaged as a button
         botMessage.addReaction(Emoji.WHITE_CHECK_MARK.unicode.toString())
-            .submit().await()
+            .await()
 
         // Setup is a block that you can use `on<T>()` to listen
         // to events at the lifecycle of the command execution.
@@ -66,7 +71,7 @@ jda.commands("!") {
             on<GuildMessageReactionAddEvent>().asFlow()
                 .filter { it.messageIdLong == botMessage.idLong }
                 .filterNot { it.reactionEmote.isEmoji && it.reactionEmote.emoji == WHITE_CHECK_MARK }
-                .onEach { it.reaction.removeReaction(it.user).submit().await() }
+                .onEach { it.reaction.removeReaction(it.user).await() }
                 .launchIn(GlobalScope)
         }
 
@@ -75,8 +80,8 @@ jda.commands("!") {
         onDispose {
             // Wait 3 seconds and delete the bot and user message
             delay(3000)
-            botMessage.delete().submit()
-            message.delete().submit()
+            botMessage.delete().queue()
+            message.delete().queue()
         }
 
         // Get the first reaction to a WHITE_CHECK_MARK for a user that is not a bot
@@ -91,10 +96,10 @@ jda.commands("!") {
             // fail throws a exception that is handle by the command framework
             // meaning that your code below will not run if `fail {}` get called
             // this block will be executed when it fails
-            botMessage.editMessage("Timeout :(").submit().await()
+            botMessage.editMessage("Timeout :(").await()
         }
 
-        botMessage.editMessage("Thanks for clicking!").submit().await()
+        botMessage.editMessage("Thanks for clicking!").await()
     }
 }
 ```
