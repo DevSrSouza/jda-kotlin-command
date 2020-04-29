@@ -4,7 +4,6 @@ import br.com.devsrsouza.jda.command.Command
 import br.com.devsrsouza.jda.command.CommandExecutorCallback
 import br.com.devsrsouza.jda.command.CommandFailException
 import br.com.devsrsouza.jda.command.lifecycle.CommandLifecycle
-import kotlinx.coroutines.future.await
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
