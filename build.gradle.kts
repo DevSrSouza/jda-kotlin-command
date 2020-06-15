@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "br.com.devsrsouza"
-version = "1.0.1-SNAPSHOT"
+version = "1.0.1"
 
 val jda_version = "4.1.1_137"
 val coroutines_version = "1.3.5"

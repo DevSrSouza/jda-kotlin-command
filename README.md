@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    implementation("br.com.devsrsouza:jda-kotlin-command:1.0.0")
+    implementation("br.com.devsrsouza:jda-kotlin-command:1.0.1")
 
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
