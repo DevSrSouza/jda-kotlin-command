@@ -50,7 +50,7 @@ class CommandImpl(
                 channel,
                 message,
                 label,
-                newArgs
+                args
             )
 
             val event: CommandLifecycle = try {
