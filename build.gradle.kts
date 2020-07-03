@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "br.com.devsrsouza"
-version = "1.0.1"
+version = "2.0.0"
 
 val jda_version = "4.1.1_137"
 val coroutines_version = "1.3.5"
@@ -17,10 +17,8 @@ repositories {
 dependencies {
 
     implementation(kotlin("stdlib-jdk8"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutines_version")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
 
-    implementation("club.minnced:jda-reactor:$jda_reactor_version")
     implementation("net.dv8tion:JDA:$jda_version") {
         exclude(module = "opus-java")
     }
